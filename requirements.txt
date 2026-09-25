@@ -1,0 +1,6 @@
+streamlit
+SQLAlchemy
+google-genai
+pandas
+numpy
+requests
