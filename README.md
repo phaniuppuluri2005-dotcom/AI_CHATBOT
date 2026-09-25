@@ -1,70 +1,336 @@
-# PHANI AI — GENERAL-PURPOSE AI PLATFORM
+# 🤖 Phani AI - Intelligent AI Assistant
 
-> **Phani AI** is a general-purpose AI platform that combines conversational intelligence, real-time information, multimodal generation, data analysis, and intelligent tool orchestration in a unified experience.
+[![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.60.0-FF4B4B.svg)](https://streamlit.io/)
+[![Google Gemini API](https://img.shields.io/badge/Google_Gemini_API-2.5-4285F4.svg)](https://ai.google.dev/)
 
----
+**Phani AI** is a general-purpose AI assistant built with **Python, Streamlit, and Google Gemini AI**. It understands natural-language queries and dynamically provides answers, explanations, coding assistance, data-analysis support, and access to specialized live services.
 
-## 💡 Universal Topic Explanation System
+The goal is simple:
 
-1. **Zero Hardcoded Topic Fallbacks**: All static fallback responses (`if topic == "Stacks": ...`) have been eliminated. The Google Gemini 2.5 AI model serves as the general-purpose knowledge engine for **virtually any topic** across 50+ domains (Physics, Computer Science, Mathematics, Engineering, Medicine, Economics, Law, History, Philosophy, Literature, Culture, Space, Agriculture, General Knowledge).
-2. **Natural-Language Parameter Parser (`services/student_service.py`)**:
-   - Parses natural-language inputs like *"Explain quantum computing briefly for a beginner with an example"* into:
-     - **Topic:** Quantum Computing
-     - **Length:** Brief
-     - **Level:** Beginner
-     - **Instruction:** Include a real-world example
-3. **Free-Form Natural Language UI (`components/student_ui.py`)**:
-   - Unconstrained free-form input (`[ Ask about any topic... ]`).
-   - Users are never forced into choosing from fixed dropdown categories.
-4. **Dynamic Quiz & SQL Practice Generator**:
-   - Generates interactive practice quizzes for **any** user-requested topic dynamically using AI reasoning.
+> **Ask Phani AI anything.**
 
 ---
 
-## 🏏 Live Cricket Data Engine (Critical Live Requirement)
+## ✨ Key Features
 
-1. **Zero Fabricated Scores**: Queries requesting current cricket scores (`"cricket score"`, `"live cricket score"`, `"India cricket score"`, `"who is winning?"`, `"criket score"`) route directly to live XML data feeds (ESPN Cricinfo Official Live RSS).
-2. **Never Uses Gemini Memory for Live Scores**: Gemini's model memory is strictly isolated from live scores to prevent hallucinated or stale score outputs. If the live feed is unavailable, the system explicitly returns:
-   `"Live cricket data is currently unavailable. Please try again shortly."`
-3. **Strict Match Status Classification**:
-   - `🔴 LIVE`: Active overs, wickets, current run rates, active batters.
-   - `✅ COMPLETED`: Final result and winner details.
-   - `⏰ UPCOMING`: Scheduled match time and teams.
-   - `ℹ️ NO MATCH`: Clear notice when no match matches the user's request.
-4. **Short-Lived Caching & Timestamps**: Max 60-second TTL cache with `last_updated` timestamps on every card.
-
----
-
-## 🌟 Key Platform Capabilities
-
-1. **Conversational AI Core**: Multi-turn reasoning powered by Google Gemini 2.5 LLM with context retention and persona modes.
-2. **Adaptive Response Length Engine**: Responds according to explicit user style instructions (`brief`, `detailed`, `beginner`, `code_only`, `summary`).
-3. **Central AI Orchestrator**: Handles single & multi-intent task pipelines (e.g. *"Explain photosynthesis briefly AND create an image to help me understand it"*).
-4. **Data Analysis Engine**: Upload CSV, Excel (`.xlsx`), or JSON datasets for automated statistics, missing value audits, top value counts, and interactive charts (Bar, Line, Scatter, Pie) using Pandas and Streamlit.
-5. **Multimodal Vision Studio**: Upload images (PNG, JPG) for Visual Q&A, diagram explanations, OCR text extraction, and error screenshot diagnosis.
-6. **Real-Time Information Services**: Live weather forecasts (Open-Meteo), Cricinfo cricket scores, breaking news (Google News RSS), stock ticker prices (Yahoo Finance), crypto market stats (CoinGecko), forex currency conversion (ExchangeRate API), maps geocoding (OpenStreetMap), movies, dictionary, and Wikipedia knowledge lookup.
-7. **Multimedia Generation**: Digital Image Studio (Pollinations AI / Imagen) and Asynchronous Video Studio (Phani Motion Studio).
-8. **Document / PDF AI**: PDF and DOCX text extraction, structured summarization, resume analysis, and interview question generation.
-9. **Authentication & User Data Isolation**: Password hashing (`PBKDF2-HMAC-SHA256`), user sign in/registration, and server-side data isolation ensuring users ONLY see their own history, saved items, images, and files.
-10. **Protected Admin System & Benchmark Evaluation**: Restricted Administrator system (`role == 'admin'`) with global analytics and quality control benchmark testing across factual accuracy, intent routing, latency, and failure rates.
+* 🧠 **AI-Powered Responses** — Uses Google Gemini for natural-language understanding and intelligent responses.
+* 💬 **General-Purpose Assistant** — Ask questions about programming, DSA, Data Science, science, mathematics, engineering, education, career, research, and other topics.
+* 🔄 **Context-Aware Conversations** — Understands follow-up questions using previous conversation context.
+* 🎯 **Adaptive Responses** — Adjusts explanations based on instructions such as `briefly`, `in detail`, `simply`, `with example`, and `step by step`.
+* 🐍 **Programming Assistance** — Supports Python, Java, SQL, HTML, CSS, JavaScript, and other programming-related questions.
+* 🧩 **DSA Assistance** — Explains algorithms, data structures, coding problems, and problem-solving approaches.
+* 📊 **Data Analysis** — Supports CSV/Excel analysis using Python, Pandas, and NumPy.
+* 🎬 **Movie Information** — Retrieves verified movie information from external movie services.
+* 📍 **Location & Maps** — Provides location information and Google Maps links.
+* 💱 **Currency Conversion** — Supports currency conversion using live exchange-rate services.
+* 🌦️ **Live Services** — Supports services such as weather, cricket scores, cryptocurrency prices, and other current information when requested.
+* 🔐 **Authentication & Data Storage** — Supports user authentication and persistent conversation storage.
 
 ---
 
-## 🚀 Quick Start & Local Development
+## 🧠 Intelligent Query Processing
 
-### 1. Installation
+Phani AI does not require users to select a topic before asking a question.
+
+Instead, queries are processed dynamically:
+
+```text
+User Query
+    ↓
+Query Preprocessing
+    ↓
+Typo Normalization
+    ↓
+Intent & Topic Detection
+    ↓
+Service Routing
+    ↓
+AI / Specialized Service
+    ↓
+Response Validation
+    ↓
+Final Response
+```
+
+For example:
+
+```text
+"What is Python?"
+        ↓
+General AI
+
+"Explain Python lists briefly"
+        ↓
+General AI + concise response
+
+"Current Bitcoin price"
+        ↓
+Live Cryptocurrency Service
+
+"What is the weather in Hyderabad?"
+        ↓
+Weather Service
+
+"Tell me about Inception"
+        ↓
+Movie Service
+```
+
+---
+
+## 💡 Example Queries
+
+### General Questions
+
+```text
+What is machine learning?
+Explain photosynthesis.
+Tell me about economics.
+What is blockchain?
+```
+
+### Programming & DSA
+
+```text
+Explain stacks simply.
+Solve Two Sum in Python.
+What is sliding window?
+Fix this SQL query.
+Explain linked lists with an example.
+```
+
+### Data Analytics
+
+```text
+What is Power BI?
+Explain DAX.
+What is the difference between Tableau and Power BI?
+Analyze this CSV file.
+```
+
+### Learning
+
+```text
+Teach me Python step by step.
+Give me 20 SQL interview questions.
+Create a 30-day DSA study plan.
+Explain recursion for a beginner.
+```
+
+### Current Information
+
+```text
+What is the current Bitcoin price?
+What is the weather in Hyderabad?
+What is the current cricket score?
+Convert 100 USD to INR.
+```
+
+### Movies
+
+```text
+Tell me about Inception.
+Tell me about They Call Him OG.
+Who directed Avatar?
+```
+
+### Locations
+
+```text
+Where is Charminar?
+Show me the Taj Mahal on Google Maps.
+Give me directions from Hyderabad to Vijayawada.
+```
+
+---
+
+## 🛠️ Technology Stack
+
+### Backend & Application
+
+* Python
+* Streamlit
+
+### AI
+
+* Google Gemini API
+* `google-genai`
+* Natural Language Processing
+* Intent Detection
+* Query Routing
+
+### Data Analysis
+
+* Pandas
+* NumPy
+
+### Database
+
+* SQLite for development
+* PostgreSQL for production
+
+### Version Control
+
+* Git
+* GitHub
+
+### External Services
+
+* Weather API
+* Movie information API
+* Maps
+* Currency exchange API
+* Cryptocurrency API
+* Cricket/live-data services
+
+---
+
+## 📁 Project Structure
+
+```text
+AI_CHATBOT/
+│
+├── app.py
+├── aichatapp.py
+├── nlp_engine.py
+│
+├── auth/
+│   └── ...
+│
+├── components/
+│   └── ...
+│
+├── config/
+│   └── ...
+│
+├── database/
+│   └── ...
+│
+├── services/
+│   └── ...
+│
+├── tests/
+│   └── ...
+│
+├── utils/
+│   └── ...
+│
+├── .streamlit/
+│   └── ...
+│
+├── .env.example
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the repository
+
 ```bash
-git clone https://github.com/phani/AI_CHATBOT.git
+git clone https://github.com/phaniuppuluri2005-dotcom/AI_CHATBOT.git
 cd AI_CHATBOT
+```
+
+### 2. Install dependencies
+
+```bash
 python3 -m pip install -r requirements.txt
 ```
 
-### 2. Run Application
-```bash
-streamlit run app.py
+### 3. Configure API keys
+
+Create a `.env` file using `.env.example`:
+
+```env
+GEMINI_API_KEY=your_api_key
 ```
 
-### 3. Run Automated Test Suite
+Add any other required service API keys according to the project configuration.
+
+**Do not commit `.env` or private API keys to GitHub.**
+
+### 4. Run Phani AI
+
 ```bash
-python3 run_tests.py
+python3 -m streamlit run app.py
 ```
+
+---
+
+## 🔐 Security
+
+Phani AI follows basic security practices including:
+
+* User authentication
+* User-specific conversation access
+* Environment-based API keys
+* Input validation
+* API timeout and error handling
+* Database access control
+* Protection of sensitive credentials
+
+---
+
+## 🧪 Testing
+
+Run the available tests with:
+
+```bash
+python run_tests.py
+```
+
+---
+
+## 🎯 Project Objective
+
+The objective of Phani AI is to develop a **general-purpose intelligent assistant** that can understand natural-language requests and dynamically determine the appropriate way to respond.
+
+Instead of relying on fixed topic menus, users can interact with Phani AI naturally and ask questions across different domains.
+
+The project focuses on:
+
+* AI-powered conversations
+* Natural-language understanding
+* Context-aware responses
+* Intelligent service routing
+* Programming assistance
+* DSA learning
+* Data analysis
+* Educational support
+* Real-time information services
+* External API integration
+
+---
+
+## 🔮 Future Improvements
+
+* Improved conversational memory
+* More live-data integrations
+* Advanced data-analysis capabilities
+* Improved response personalization
+* Better authentication and authorization
+* PostgreSQL production architecture
+* Background task processing
+* Performance optimization
+* Automated testing and CI/CD
+* Scalable deployment architecture
+
+---
+
+## 👨‍💻 Developer
+
+**PHANINDRA**
+
+B.Tech - Data Science
+India
+
+---
+
+## 📄 License
+
+This project is currently intended for educational, development, and portfolio purposes.
